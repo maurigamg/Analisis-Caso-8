@@ -50,7 +50,7 @@ public class main
 		FileInputStream fis = new FileInputStream(file);
 		BufferedImage image = ImageIO.read(fis); //reading the image file
 
-		int rows = 4; //You should decide the values for rows and cols variables
+		int rows = 4;
 		int cols = 4;
 		
 		int chunkWidth = image.getWidth() / cols; // determines the chunk width and height
@@ -71,14 +71,6 @@ public class main
 			}
 		}
 		System.out.println("Splitting done");
-
-		//writing mini images into image files
-		/*
-		for (int i = 0; i < imgs.length; i++) {
-			ImageIO.write(imgs[i], "jpg", new File("img" + i + ".jpg"));
-		}
-		System.out.println("Mini images created");
-		*/
 	}	
   
 	public static void SVGgenerator() throws IOException 
