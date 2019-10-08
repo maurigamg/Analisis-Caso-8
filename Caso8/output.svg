@@ -105,7 +105,6 @@
   <path vector-effect="none" fill="#808000" d="M704,448 L736,448 L736,480 L704,480 L704,448"/>
   <path vector-effect="none" fill="#808000" d="M736,448 L768,448 L768,480 L736,480 L736,448"/>
   <path vector-effect="none" fill="#808000" d="M768,448 L800,448 L800,480 L768,480 L768,448"/>
-  <path vector-effect="none" fill="#808000" d="M320,480 L352,480 L352,512 L320,512 L320,480"/>
   <path vector-effect="none" fill="#808000" d="M352,480 L384,480 L384,512 L352,512 L352,480"/>
   <path vector-effect="none" fill="#808000" d="M384,480 L416,480 L416,512 L384,512 L384,480"/>
   <path vector-effect="none" fill="#808000" d="M416,480 L448,480 L448,512 L416,512 L416,480"/>
@@ -206,7 +205,6 @@
   <path vector-effect="none" fill="#808000" d="M768,640 L800,640 L800,672 L768,672 L768,640"/>
   <path vector-effect="none" fill="#808000" d="M256,672 L288,672 L288,704 L256,704 L256,672"/>
   <path vector-effect="none" fill="#808000" d="M288,672 L320,672 L320,704 L288,704 L288,672"/>
-  <path vector-effect="none" fill="#808000" d="M320,672 L352,672 L352,704 L320,704 L320,672"/>
   <path vector-effect="none" fill="#808000" d="M384,672 L416,672 L416,704 L384,704 L384,672"/>
   <path vector-effect="none" fill="#808000" d="M416,672 L448,672 L448,704 L416,704 L416,672"/>
   <path vector-effect="none" fill="#808000" d="M448,672 L480,672 L480,704 L448,704 L448,672"/>
@@ -218,6 +216,7 @@
   <path vector-effect="none" fill="#808000" d="M704,672 L736,672 L736,704 L704,704 L704,672"/>
   <path vector-effect="none" fill="#808000" d="M736,672 L768,672 L768,704 L736,704 L736,672"/>
   <path vector-effect="none" fill="#808000" d="M768,672 L800,672 L800,704 L768,704 L768,672"/>
+  <path vector-effect="none" fill="#808000" d="M64,704 L96,704 L96,736 L64,736 L64,704"/>
   <path vector-effect="none" fill="#808000" d="M224,704 L256,704 L256,736 L224,736 L224,704"/>
   <path vector-effect="none" fill="#808000" d="M256,704 L288,704 L288,736 L256,736 L256,704"/>
   <path vector-effect="none" fill="#808000" d="M288,704 L320,704 L320,736 L288,736 L288,704"/>
@@ -230,7 +229,6 @@
   <path vector-effect="none" fill="#808000" d="M736,704 L768,704 L768,736 L736,736 L736,704"/>
   <path vector-effect="none" fill="#808000" d="M768,704 L800,704 L800,736 L768,736 L768,704"/>
   <path vector-effect="none" fill="#808000" d="M256,736 L288,736 L288,768 L256,768 L256,736"/>
-  <path vector-effect="none" fill="#808000" d="M352,736 L384,736 L384,768 L352,768 L352,736"/>
   <path vector-effect="none" fill="#808000" d="M384,736 L416,736 L416,768 L384,768 L384,736"/>
   <path vector-effect="none" fill="#808000" d="M448,736 L480,736 L480,768 L448,768 L448,736"/>
   <path vector-effect="none" fill="#808000" d="M480,736 L512,736 L512,768 L480,768 L480,736"/>
@@ -238,7 +236,6 @@
   <path vector-effect="none" fill="#808000" d="M736,736 L768,736 L768,768 L736,768 L736,736"/>
   <path vector-effect="none" fill="#808000" d="M768,736 L800,736 L800,768 L768,768 L768,736"/>
   <path vector-effect="none" fill="#808000" d="M224,768 L256,768 L256,800 L224,800 L224,768"/>
-  <path vector-effect="none" fill="#808000" d="M352,768 L384,768 L384,800 L352,800 L352,768"/>
   <path vector-effect="none" fill="#808000" d="M384,768 L416,768 L416,800 L384,800 L384,768"/>
   <path vector-effect="none" fill="#808000" d="M480,768 L512,768 L512,800 L480,800 L480,768"/>
   <path vector-effect="none" fill="#808000" d="M512,768 L544,768 L544,800 L512,800 L512,768"/>
@@ -256,7 +253,6 @@
   <path vector-effect="none" fill="#808000" d="M768,832 L800,832 L800,864 L768,864 L768,832"/>
   <path vector-effect="none" fill="#808000" d="M800,832 L832,832 L832,864 L800,864 L800,832"/>
   <path vector-effect="none" fill="#808000" d="M224,864 L256,864 L256,896 L224,896 L224,864"/>
-  <path vector-effect="none" fill="#808000" d="M256,864 L288,864 L288,896 L256,896 L256,864"/>
   <path vector-effect="none" fill="#808000" d="M416,864 L448,864 L448,896 L416,896 L416,864"/>
   <path vector-effect="none" fill="#808000" d="M448,864 L480,864 L480,896 L448,896 L448,864"/>
   <path vector-effect="none" fill="#808000" d="M480,864 L512,864 L512,896 L480,896 L480,864"/>
