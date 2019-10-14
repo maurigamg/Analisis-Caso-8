@@ -1,6 +1,6 @@
 package aplication;
 
-import logic.Genetics;
+import logic.Genetics;;
 
 public class Test {
   public static void main(String[] args) {

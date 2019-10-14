@@ -3,7 +3,6 @@ package logic;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -36,13 +35,16 @@ public class Genetics {
    * @param pQuadrants
    */
   private void implementProbability(Quadrant[][] pQuadrants) {
-    for(int row = 0; row < 32; row++) {
-      for(int column = 0; column < 32; column++) {
+    for(int row = 24; row < 32; row++) {
+      for(int column = 24; column < 32; column++) {
         float possibility=(float)(Math.random()*1);
         Quadrant quadrant = pQuadrants[row][column];
         if(quadrant.getPossibility()>possibility) {
           useQuadrant(quadrant.getImage(),row,column);
-          Target target = fixTarget(defineTarget(quadrant.getImage()));          
+          Target target = fixTarget(defineTarget(quadrant.getImage()));
+          target.establishRepresentation();
+          ArrayList<Polygon> initialPopulation = establishPopulation(target,row,column);
+          return;
         }
       }
     }
@@ -65,15 +67,6 @@ public class Genetics {
   private Target defineTarget(BufferedImage pSector) {
     ArrayList<Color> colors = new ArrayList<Color>();
     ArrayList<Integer> totalColor = new ArrayList<Integer>();
-    /*
-    int width = pSector.getWidth();
-    int height = pSector.getHeight();
-    int maxPoints = width * height / 2;
-    for(int actualPoint = 0; actualPoint < maxPoints;actualPoint++) {
-      int pointX = (int) (Math.random() * width);
-      int pointY = (int) (Math.random() * height);
-      
-    }*/
     for(int pointX = 0; pointX < pSector.getWidth(); pointX++) {
       for(int pointY = 0; pointY < pSector.getHeight(); pointY++) {
         if(colors.size()!=0) {
@@ -127,11 +120,11 @@ public class Genetics {
    */
   private Target fixTarget(Target pTarget) {
     ArrayList<Integer> percentages = pTarget.getPercentages();
-    int suma=0;
+    int sum=0;
     for(Integer percentage: percentages) {
-      suma+=percentage;
+      sum+=percentage;
     }
-    int rest = 100 - suma;
+    int rest = 100 - sum;
     if(rest>0 && percentages.size()!=0) {
       int position = (int)(Math.random()*percentages.size());
       percentages.set(position, percentages.get(position)+rest);
@@ -139,6 +132,28 @@ public class Genetics {
     }
     return pTarget;
   }
+  
+  /**
+   * 
+   * @param pTarget
+   * @param pMaxX
+   * @param pMaxY
+   * @return
+   */
+  private ArrayList<Polygon> establishPopulation(Target pTarget,int pMaxX,int pMaxY){
+    ArrayList<Polygon> population = new ArrayList<Polygon>();
+    ArrayList<Short[]> representations = pTarget.getRepresentations();
+    for(Short[] representation: representations) {
+      int[] firstPoint= {(int)(Math.random()*(pMaxX/4)),(int)(Math.random()*((int)(pMaxY/4)))};
+      int[] secondPoint= {(int)(Math.random()*(pMaxX/4)),(int)(Math.random()*((int)(pMaxY/4)))};
+      int[] thirdPoint= {(int)(Math.random()*(pMaxX/4)),(int)(Math.random()*(pMaxY/4))};
+      short chromosome = (short)(Math.random()*(representation[1]-representation[0]+1)+representation[0]);
+      population.add(new Polygon(chromosome,firstPoint,secondPoint,thirdPoint));
+    }
+    return population;
+  }
+  
+  
   
   private void createSVG(){
     

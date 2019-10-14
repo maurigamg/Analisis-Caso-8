@@ -12,11 +12,13 @@ import java.util.ArrayList;
  */
 public class Target {
   private ArrayList<Color> colors;
-  private ArrayList<Integer> percetanges;
+  private ArrayList<Integer> percentages;
+  private ArrayList<Short[]> representations;
   
   public Target() {
     colors = new ArrayList<Color>();
-    percetanges = new ArrayList<Integer>();
+    percentages = new ArrayList<Integer>();
+    representations = new ArrayList<Short[]>();
   }
   
   /**
@@ -32,11 +34,11 @@ public class Target {
    * @param pPercetange
    */
   public void addPercetage(int pPercetange) {
-    percetanges.add(pPercetange);
+    percentages.add(pPercetange);
   }
   
   public void setPercentage(ArrayList<Integer> pPercentages) {
-    percetanges=pPercentages;
+    percentages=pPercentages;
   }
   
   public ArrayList<Color> getColors() {
@@ -44,6 +46,31 @@ public class Target {
   }
   
   public ArrayList<Integer> getPercentages(){
-    return percetanges;
+    return percentages;
+  }
+  
+  public ArrayList<Short[]> getRepresentations(){
+    return representations;
+  }
+  
+  public void establishRepresentation() {
+    short actual = -32768;
+    int position;
+    float floatPercentage;
+    short range;
+    for(position = 0;position<percentages.size()-1;position++) {
+      floatPercentage = (float)percentages.get(position)/100;
+      range = (short)(65535*floatPercentage+actual);
+      Short[] representation = {actual,range};
+      representations.add(representation);
+      actual=(short) (range+1);
+    }
+    floatPercentage = (float)percentages.get(position)/100;
+    range = (short)(65535*floatPercentage+actual);
+    if(range!=32767) {
+      range=32767;
+    }
+    Short[] representation = {actual,range};
+    representations.add(representation);
   }
 }
