@@ -1,11 +1,10 @@
 package aplication;
 
-import logic.Probability;
+import logic.Genetics;
 
 public class Test {
   public static void main(String[] args) {
-    Probability probability = new Probability();
-    probability.setFilename("Images/Cubo.jpg");
-    probability.startProcess();
+    Genetics genetics = new Genetics();
+    genetics.startProcess();
   }
 }

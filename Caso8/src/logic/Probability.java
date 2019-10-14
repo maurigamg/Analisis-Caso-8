@@ -15,22 +15,24 @@ import javax.imageio.ImageIO;
  */
 public class Probability {
   private String filename;
-  private Quadrant quadrants[];
+  private Quadrant quadrants[][];
 
-  public Probability() {
-    filename = null;
-    quadrants = new Quadrant[1024];
-  }
-
-  public void setFilename(String pFilename) {
+  /**
+   * 
+   * @param pFilename
+   */
+  public Probability(String pFilename) {
     filename = pFilename;
+    quadrants = new Quadrant[32][32];
   }
-
-  public void startProcess(){
-    try {
-      splitImage();
-      testAreas();
-    } catch (IOException e){}
+  
+  public Quadrant[][] getQuadrants() {
+    return quadrants;
+  }
+  
+  public void startProcess() throws IOException{
+    splitImage();
+    testAreas();
   }
 
   /**
@@ -53,10 +55,10 @@ public class Probability {
       for (int y = 0; y < cols; y++) 
       {
         //Initialize the image array with image chunks
-        quadrants[count] = new Quadrant(new BufferedImage(chunkWidth, chunkHeight, image.getType()));
+        quadrants[x][y] = new Quadrant(new BufferedImage(chunkWidth, chunkHeight, image.getType()));
 
         // draws the image chunk
-        Graphics2D gr = quadrants[count++].getImage().createGraphics();
+        Graphics2D gr = quadrants[x][y].getImage().createGraphics();
         gr.drawImage(image, 0, 0, chunkWidth, chunkHeight, chunkWidth * y, chunkHeight * x, 
             chunkWidth * y + chunkWidth, chunkHeight * x + chunkHeight, null);
         gr.dispose();
@@ -70,10 +72,12 @@ public class Probability {
    */
   private void testAreas() throws IOException {
     int maxTest=(int)(Math.random()*4+2); //total intents among 2 and 5
-    for(int position = 0; position != 1024; position++) {
-      for(int actualTest=1;actualTest<maxTest;actualTest++) {
-        if(!isAppropriate(quadrants[position].getImage(),maxTest)) {
-          quadrants[position].updatePossibiliy((float)1/maxTest); //It is reduced the possibility
+    for(int row = 0; row < 32; row++) {
+      for(int column = 0; column < 32; column++) {
+        for(int actualTest=1;actualTest<maxTest;actualTest++) {
+          if(!isAppropriate(quadrants[row][column].getImage(),maxTest)) {
+            quadrants[row][column].updatePossibiliy((float)1/maxTest); //It is reduced the possibility
+          }
         }
       }
     }
