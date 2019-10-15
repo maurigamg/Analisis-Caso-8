@@ -63,6 +63,9 @@ public class Target {
     return 0;
   }
   
+  /**
+   * This method establishes the chromosomal representation
+   */
   public void establishRepresentation() {
     short actual = -32768;
     int position;

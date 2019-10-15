@@ -49,7 +49,6 @@ public class Probability {
 
     int chunkWidth = image.getWidth() / cols; // determines the chunk width and height
     int chunkHeight = image.getHeight() / rows;
-    int count = 0;
     for (int x = 0; x < rows; x++) 
     {
       for (int y = 0; y < cols; y++) 
@@ -71,12 +70,11 @@ public class Probability {
    * @throws IOException 
    */
   private void testAreas() throws IOException {
-    int maxTest=(int)(Math.random()*4+2); //total intents among 2 and 5
     for(int row = 0; row < 32; row++) {
       for(int column = 0; column < 32; column++) {
-        for(int actualTest=1;actualTest<maxTest;actualTest++) {
-          if(!isAppropriate(quadrants[row][column].getImage(),maxTest)) {
-            quadrants[row][column].updatePossibiliy((float)1/maxTest); //It is reduced the possibility
+        for(int actualTest=0;actualTest<4;actualTest++) {
+          if(!isAppropriate(quadrants[row][column].getImage())) {
+            quadrants[row][column].updatePossibiliy((float) 0.2); //It is reduced the possibility in 0.2
           }
         }
       }
@@ -84,16 +82,14 @@ public class Probability {
   }
 
   /**
-   * This probabilistic method determines if into a certain area (small part from an original image) has
-   * a 70% of color using random points to test it.
-   * @param pImage Small image/area of other image
-   * @param pTestArea It corresponds to the area that is going to be tested
-   * @return True if the area taken has a 70% of color, false in contrary case
+   * 
+   * @param pImage
+   * @return
    */
-  private boolean isAppropriate(BufferedImage pImage,int pTestArea) {
+  private boolean isAppropriate(BufferedImage pImage) {
     int width = pImage.getWidth();
     int height = pImage.getHeight();
-    int maxTest = width*height/pTestArea; // Random points used
+    int maxTest = width*height/4; // Random points used
     int totalWhites = 0;
     for(int actualTest = 0; actualTest<maxTest; actualTest++) {
       int pointX = (int)(Math.random()*width);
