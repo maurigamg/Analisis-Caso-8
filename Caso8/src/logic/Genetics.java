@@ -205,7 +205,7 @@ public class Genetics {
             int gDifference = Math.abs(colorInArray.getGreen()-color.getGreen());
             int bDifference = Math.abs(colorInArray.getBlue()-color.getBlue());
 
-            if(rDifference <= 40 && gDifference <= 40 && bDifference <= 40) {
+            if(rDifference <= 10 && gDifference <= 10 && bDifference <= 10) {
               totalColor.set(actualPosition, totalColor.get(actualPosition)+1);
               break;
             }else if(actualPosition == colors.size()-1) {
