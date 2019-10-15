@@ -8,7 +8,7 @@ package logic;
  *
  */
 public class Polygon {
-  public static final int POLYGON_SIZE = 32;
+  public static final int POLYGON_SIZE = 40;
   private short chromosome;
   private int[] firstPoint;
   private int[] secondPoint;
