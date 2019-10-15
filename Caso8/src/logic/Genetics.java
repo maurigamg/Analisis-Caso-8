@@ -35,29 +35,119 @@ public class Genetics {
    * @param pQuadrants
    */
   private void implementProbability(Quadrant[][] pQuadrants) {
-    for(int row = 24; row < 32; row++) {
-      for(int column = 24; column < 32; column++) {
+    for(int row = 0; row < 32; row++) {
+      for(int column = 0; column < 32; column++) {
         float possibility=(float)(Math.random()*1);
         Quadrant quadrant = pQuadrants[row][column];
         if(quadrant.getPossibility()>possibility) {
-          useQuadrant(quadrant.getImage(),row,column);
           Target target = fixTarget(defineTarget(quadrant.getImage()));
           target.establishRepresentation();
-          ArrayList<Polygon> initialPopulation = establishPopulation(target,row,column);
-          return;
+          ArrayList<Polygon> finalPopulation= generatePopulation(target,row,column);
+          savePopulation(finalPopulation);
         }
       }
     }
   }
   
-  /**
-   * 
-   * @param pSector
-   * @param pRow
-   * @param pColumn
-   */
-  private void useQuadrant(BufferedImage pSector,int pRow,int pColumn) {
+  private Short[] representationRange(ArrayList<Short[]> representations, Short chromosome) {
+    for(Short[] representation: representations) {
+      if(chromosome >= representation[0] && chromosome <= representation[1]) {
+        return representation;
+      }
+    }
+    return null;
+  }
+  
+  private int averageIndividual(ArrayList<Polygon> population,Short[] range) {
+    int totals = 0;
+    for(Polygon individual: population) {
+      short chromosome = individual.getChromosome();
+      if(chromosome >= range[0] && chromosome <= range[1]) {
+        totals += 1;
+      }
+    }
+    return (int)(100*((float)totals/population.size()));
+  }
+  
+  private ArrayList<Polygon> startReproduction(ArrayList<Polygon> population,int pRow, int pColumn){
+    int totalChildren = population.size()/2;
+    if(totalChildren == 0) {
+      totalChildren = 1;
+    }
+    for(int children = 0; children<totalChildren; children++) {
+      Polygon father1 = population.get((int)(Math.random()*population.size()));
+      Polygon father2 = population.get((int)(Math.random()*population.size()));
+      short chromosomeFather1 = father1.getChromosome();
+      short chromosomeFather2 = father2.getChromosome();
+      
+      chromosomeFather1 =(short)(chromosomeFather1>>8);
+      chromosomeFather1 =(short)(chromosomeFather1<<8);
+      
+      chromosomeFather2 =(short)(chromosomeFather2<<8);
+      chromosomeFather2 =(short)(chromosomeFather2>>8);
+      
+      short newChromosome = (short) (chromosomeFather1 | chromosomeFather2);
+      
+      int[] firstPoint= {(int)(Math.random()*8)+pRow*32,(int)(Math.random()*8)+pColumn*32};
+      int[] secondPoint= {(int)(Math.random()*8)+pRow*32,(int)(Math.random()*8)+pColumn*32};
+      int[] thirdPoint= {(int)(Math.random()*8)+pRow*32,(int)(Math.random()*8)+pColumn*32};
+      
+      int mutation = (int)(Math.random()*100+1);
+      if(father1==father2 || mutation >= 5) {
+        short bitPosition = (short) (1 << (int)(Math.random()*16+1));
+        
+        if((newChromosome & bitPosition) == 0){
+          newChromosome |=bitPosition;
+        }else {
+          newChromosome &= ~bitPosition;
+        }
+        
+      }
+      
+      population.add(new Polygon(newChromosome,firstPoint,secondPoint,thirdPoint));
+    }
     
+    return population;
+  }
+  
+  private ArrayList<Polygon> generatePopulation(Target pTarget,int pRow,int pColumn){
+    ArrayList<Polygon> finalPopulation = establishPopulation(pTarget, pRow, pColumn);;
+    ArrayList<Short[]> representations = pTarget.getRepresentations();
+    while(true) {
+      if(!isObjetiveComplete(finalPopulation,pTarget)) {
+        ArrayList<Polygon> newPopulation = establishPopulation(pTarget,pRow,pColumn);;
+        for(Polygon individual: finalPopulation) {
+          Short[] range = representationRange(representations,individual.getChromosome());
+          if(averageIndividual(finalPopulation, range) < pTarget.getPercentageInRange(range)) {
+            newPopulation.add(individual);
+          }
+        }
+        
+        finalPopulation = startReproduction(newPopulation,pRow,pColumn);
+      }else {
+        break;
+      }
+    }
+    return finalPopulation;
+  }
+  
+  private boolean isObjetiveComplete(ArrayList<Polygon> pPopulation,Target pTarget) {
+    for(int position = 0; position < pTarget.getPercentages().size(); position++) {
+      int totals = 0;
+      Short[] range = pTarget.getRepresentations().get(position);
+      for(Polygon individual: pPopulation) {
+        short chromosome = individual.getChromosome();
+        if(chromosome >= range[0] && chromosome <= range[1] ) {
+          totals++;
+        }
+      }
+      int percentage = (int)(100*((float)totals/pPopulation.size()));
+      if(Math.abs(percentage-pTarget.getPercentages().get(position)) > 4) {
+        return false;
+      }
+    }
+    
+    return true;
   }
   
   /**
@@ -140,20 +230,26 @@ public class Genetics {
    * @param pMaxY
    * @return
    */
-  private ArrayList<Polygon> establishPopulation(Target pTarget,int pMaxX,int pMaxY){
+  private ArrayList<Polygon> establishPopulation(Target pTarget,int pRow,int pColumn){
     ArrayList<Polygon> population = new ArrayList<Polygon>();
     ArrayList<Short[]> representations = pTarget.getRepresentations();
     for(Short[] representation: representations) {
-      int[] firstPoint= {(int)(Math.random()*(pMaxX/4)),(int)(Math.random()*((int)(pMaxY/4)))};
-      int[] secondPoint= {(int)(Math.random()*(pMaxX/4)),(int)(Math.random()*((int)(pMaxY/4)))};
-      int[] thirdPoint= {(int)(Math.random()*(pMaxX/4)),(int)(Math.random()*(pMaxY/4))};
+      int[] firstPoint = {(int)(Math.random()*8)+pRow*32,(int)(Math.random()*8)+pColumn*32};
+      int[] secondPoint = {(int)(Math.random()*8)+pRow*32,(int)(Math.random()*8)+pColumn*32};
+      int[] thirdPoint = {(int)(Math.random()*8)+pRow*32,(int)(Math.random()*8)+pColumn*32};
       short chromosome = (short)(Math.random()*(representation[1]-representation[0]+1)+representation[0]);
       population.add(new Polygon(chromosome,firstPoint,secondPoint,thirdPoint));
     }
     return population;
   }
   
-  
+  private void savePopulation(ArrayList<Polygon> population) {
+    for(Polygon individual: population) {
+      int[] firstPoint = individual.getFirtsPoint();
+      int[] secondPoint = individual.getSecondPoint();
+      int[] thirdPoint = individual.getThirdPoint();
+    }
+  }
   
   private void createSVG(){
     

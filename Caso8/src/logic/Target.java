@@ -53,6 +53,16 @@ public class Target {
     return representations;
   }
   
+  public int getPercentageInRange(Short[] pRange) {
+    for(int position = 0; position < representations.size(); position++) {
+      Short[] representation = representations.get(position);
+      if(pRange[0] == representation[0] && pRange[1] == representation[1]) {
+        return percentages.get(position);
+      }
+    }
+    return 0;
+  }
+  
   public void establishRepresentation() {
     short actual = -32768;
     int position;
