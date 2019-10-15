@@ -3,7 +3,7 @@ package logic;
 import java.awt.image.BufferedImage;
 
 /**
- * 
+ * Class that contains the information of a certain part of an image
  * @author Mauricio Gamboa
  * @author Dylan Torres
  * @version 08/10/2019

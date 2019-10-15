@@ -4,16 +4,16 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- * 
+ * Class that contains the target of certain quadrant
  * @author EXTREME
  * @author EXTREME
  * @version 12/10/2019
  *
  */
 public class Target {
-  private ArrayList<Color> colors;
-  private ArrayList<Integer> percentages;
-  private ArrayList<Short[]> representations;
+  private ArrayList<Color> colors; //Color of the target
+  private ArrayList<Integer> percentages; //Percentages of each color
+  private ArrayList<Short[]> representations; //chromosomatic representation
   
   public Target() {
     colors = new ArrayList<Color>();
@@ -64,7 +64,7 @@ public class Target {
   }
   
   /**
-   * This method establishes the chromosomal representation
+   * This method establishes the chromosomatic representation
    */
   public void establishRepresentation() {
     short actual = -32768;

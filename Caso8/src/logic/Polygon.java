@@ -1,7 +1,7 @@
 package logic;
 
 /**
- * 
+ * This is the class used to represent the individuals of a population
  * @author Mauricio Gamboa
  * @author Dylan Torres
  * @version 12/10/2019

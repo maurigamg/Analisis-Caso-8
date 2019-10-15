@@ -23,7 +23,7 @@ public class Probability {
    */
   public Probability(String pFilename) {
     filename = pFilename;
-    quadrants = new Quadrant[32][32];
+    quadrants = new Quadrant[32][32]; //The image is split in 1024 quadrants
   }
   
   public Quadrant[][] getQuadrants() {
@@ -66,7 +66,7 @@ public class Probability {
   }
 
   /**
-   * This method tests each image three times to see if its possibility is going to be reduced
+   * This method tests each image four times to see if its possibility is going to be reduced
    * @throws IOException 
    */
   private void testAreas() throws IOException {
@@ -82,9 +82,9 @@ public class Probability {
   }
 
   /**
-   * 
-   * @param pImage
-   * @return
+   * This method determines if a sector of the image has the necessary percentage of color
+   * @param pImage Sector to test
+   * @return True if the sector has the necessary percentage, false in contrary case
    */
   private boolean isAppropriate(BufferedImage pImage) {
     int width = pImage.getWidth();

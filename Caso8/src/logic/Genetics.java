@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import storage.SVG;
 
 /**
- * 
+ * This is the class that works the genetic algorithm
  * @author Mauricio
  * @author Dylan Torres
  * @version 12/10/2019
@@ -60,13 +60,13 @@ public class Genetics {
   
   /**
    * This method identifies the range where a chromosome is located
-   * @param representations All representations of a target
-   * @param chromosome Chromosome to identify his representation
+   * @param pRepresentations All representations of a target
+   * @param pChromosome Chromosome to identify his representation
    * @return The representation (range) of the chromosome
    */
-  private Short[] representationRange(ArrayList<Short[]> representations, Short chromosome) {
-    for(Short[] representation: representations) {
-      if(chromosome >= representation[0] && chromosome <= representation[1]) {
+  private Short[] representationRange(ArrayList<Short[]> pRepresentations, Short pChromosome) {
+    for(Short[] representation: pRepresentations) {
+      if(pChromosome >= representation[0] && pChromosome <= representation[1]) {
         return representation;
       }
     }
@@ -75,36 +75,36 @@ public class Genetics {
   
   /**
    * This method calculates the percentage of individuals in a certain range into a population
-   * @param population
-   * @param range Range to find
+   * @param pPopulation
+   * @param pRange Range to find
    * @return The percentage of individuals of the range
    */
-  private int averageIndividual(ArrayList<Polygon> population,Short[] range) {
+  private int averageIndividual(ArrayList<Polygon> pPopulation,Short[] pRange) {
     int totals = 0;
-    for(Polygon individual: population) {
+    for(Polygon individual: pPopulation) {
       short chromosome = individual.getChromosome();
-      if(chromosome >= range[0] && chromosome <= range[1]) {
+      if(chromosome >= pRange[0] && chromosome <= pRange[1]) {
         totals += 1;
       }
     }
-    return (int)(100*((float)totals/population.size()));
+    return (int)(100*((float)totals/pPopulation.size()));
   }
   
   /**
    * This method generates new individuals of a population
-   * @param population
+   * @param pPopulation
    * @param pRow
    * @param pColumn
    * @return The new population
    */
-  private ArrayList<Polygon> startReproduction(ArrayList<Polygon> population,int pRow, int pColumn){
-    int totalChildren = population.size()/2;
+  private ArrayList<Polygon> startReproduction(ArrayList<Polygon> pPopulation,int pRow, int pColumn){
+    int totalChildren = pPopulation.size()/2;
     if(totalChildren == 0) {
       totalChildren = 1;
     }
     for(int children = 0; children<totalChildren; children++) {
-      Polygon father1 = population.get((int)(Math.random()*population.size()));
-      Polygon father2 = population.get((int)(Math.random()*population.size()));
+      Polygon father1 = pPopulation.get((int)(Math.random()*pPopulation.size()));
+      Polygon father2 = pPopulation.get((int)(Math.random()*pPopulation.size()));
       short chromosomeFather1 = father1.getChromosome();
       short chromosomeFather2 = father2.getChromosome();
 
@@ -132,10 +132,10 @@ public class Genetics {
 
       }
 
-      population.add(new Polygon(newChromosome,firstPoint,secondPoint,thirdPoint));
+      pPopulation.add(new Polygon(newChromosome,firstPoint,secondPoint,thirdPoint));
     }
 
-    return population;
+    return pPopulation;
   }
   
   /**
@@ -274,9 +274,9 @@ public class Genetics {
     ArrayList<Polygon> population = new ArrayList<Polygon>();
     ArrayList<Short[]> representations = pTarget.getRepresentations();
     for(Short[] representation: representations) {
-      int[] firstPoint = {(int)(Math.random()*Polygon.POLYGON_SIZE)+pRow*32,(int)(Math.random()*32)+pColumn*Polygon.POLYGON_SIZE+1024*picture};
-      int[] secondPoint = {(int)(Math.random()*Polygon.POLYGON_SIZE)+pRow*32,(int)(Math.random()*32)+pColumn*Polygon.POLYGON_SIZE+1024*picture};
-      int[] thirdPoint = {(int)(Math.random()*Polygon.POLYGON_SIZE)+pRow*32,(int)(Math.random()*32)+pColumn*Polygon.POLYGON_SIZE+1024*picture};
+      int[] firstPoint = {(int)(Math.random()*Polygon.POLYGON_SIZE)+pRow*32,(int)(Math.random()*Polygon.POLYGON_SIZE)+pColumn*32+1024*picture};
+      int[] secondPoint = {(int)(Math.random()*Polygon.POLYGON_SIZE)+pRow*32,(int)(Math.random()*Polygon.POLYGON_SIZE)+pColumn*32+1024*picture};
+      int[] thirdPoint = {(int)(Math.random()*Polygon.POLYGON_SIZE)+pRow*32,(int)(Math.random()*Polygon.POLYGON_SIZE)+pColumn*32+1024*picture};
       short chromosome = (short)(Math.random()*(representation[1]-representation[0]+1)+representation[0]);
       population.add(new Polygon(chromosome,firstPoint,secondPoint,thirdPoint));
     }
